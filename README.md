@@ -109,3 +109,12 @@ To run only the data-driven and negative tests, use:
 npx playwright test tests/booking-data-driven.spec.ts tests/booking-negative.spec.ts
 ```
 
+## Test Coverage
+
+- Booking API: retrieves booking IDs, creates bookings, and verifies retrieved booking data.
+- Response validation: checks status codes, content type, required fields, and response value types.
+- Authentication: verifies that updates without a token are rejected and that authenticated updates succeed.
+- Negative cases: checks the API’s observed behavior for incomplete booking data.
+- Data-driven tests: exercises multiple booking payloads.
+- PokeAPI practice tests: checks successful responses, response values, Pokémon types, and a not-found response.
+- Authenticated deletion: deletes a booking and verifies it can no longer be retrieved.
