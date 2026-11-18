@@ -87,3 +87,25 @@ The workflow in `.github/workflows/playwright.yml` runs on push and pull request
 - **Modular tests:** Shared request and assertion logic lives in helpers, keeping spec files focused on behavior.
 - **Data-driven tests:** Scenarios are parameterized so that new cases are added as data rather than new code.
 - **CI labels:** The job ID and display name are set explicitly so the status badge and run history are easy to read during review.
+
+## Data-driven booking tests
+
+The booking tests use a data file so that new scenarios can be added without writing new test code. The file lives at `tests/data/bookings.ts` and contains two lists:
+
+- `validBookings` holds complete bookings. Each entry has a `name` used in the test report and a `payload` that is sent to `POST /booking`. The spec creates each booking, checks the response, and then fetches it to confirm the stored data matches.
+- `incompleteBookings` holds bookings with required fields missing. These are used to check how the API rejects bad input.
+
+To add a valid case, add a new object to `validBookings` with a unique `name` and a full `payload`. The spec in `tests/booking-data-driven.spec.ts` picks it up automatically on the next run.
+
+To add an incomplete case, add an object to `incompleteBookings`. The spec in `tests/booking-negative.spec.ts` sends the payload and expects a 500 status.
+
+The 500 expectation reflects how the Restful Booker API currently behaves, not how a well-designed API should respond. A standard API would normally return 400 for invalid input. The test name states this so a reviewer can see the choice was deliberate, and it would need updating if the API's behavior changes.
+
+Authorization is covered in `tests/booking-auth.spec.ts`, which confirms that an update without a token returns 403.
+
+To run only the data-driven and negative tests, use:
+
+```bash
+npx playwright test tests/booking-data-driven.spec.ts tests/booking-negative.spec.ts
+```
+
