@@ -22,3 +22,10 @@ export const validBookings = [
     },
   },
 ];
+
+export const incompleteBookings = [
+  {
+    name: 'missing lastname and dates',
+    payload: { firstname: 'Jane' },
+  },
+];
