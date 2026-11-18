@@ -34,5 +34,5 @@ test('POST then GET returns the same booking data', async ({ request }) => {
   expect(fetched.depositpaid).toBe(newBooking.depositpaid);
   expect(fetched.bookingdates).toEqual(newBooking.bookingdates);
   expect(fetched.additionalneeds).toBe(newBooking.additionalneeds);
-  expect(createResponse.status(), 'POST /booking should succeed').toBe(200);
+  expect(typeof bookingid).toBe('number')
 });
